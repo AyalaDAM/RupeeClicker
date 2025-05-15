@@ -1,0 +1,169 @@
+:root {
+
+}
+
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    overflow-y: hidden;
+}
+
+/* MAIN */
+
+main {
+    background-color: red;
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+}
+
+.h-separator {
+    background-color: magenta;
+    width: 100%;
+    height: 10px;
+}
+
+.v-separator {
+    background-color: magenta;
+    width: 10px;
+}
+
+/* GAME AREA */
+
+.game-area {
+    background-color: greenyellow;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 30%;
+    min-width: 400px;
+    min-height: 720px;
+}
+
+.game-info {
+    background-color: aqua;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.game-name {
+    background-color: blue;
+    width: 80%;
+    height: 5%;
+    margin: 25px 0px;
+}
+
+.counter {
+    background-color: green;
+    width: 75%;
+    height: 10%;
+}
+
+.subcounter {
+    background-color: yellow;
+    width: 50%;
+    height: 5%;
+    margin-bottom: 15px;
+}
+
+.clickable {
+    background-color: red;
+    width: 70%;
+    height: 70%;
+}
+
+.general-info {
+    background-color: blue;
+    width: 100%;
+    height: 150px;
+}
+
+/* VISUAL AREA */
+
+.visual-area {
+    background-color: blue;
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    min-width: 500px;
+    min-height: 720px;
+}
+
+.options {
+    background-color: yellow;
+    width: 100%;
+    height: 100px;
+}
+
+.game-bots {
+    background-color: green;
+    width: 100%;
+    height: 100%;
+}
+
+/* SHOP AREA */
+
+.store-area {
+    background-color: cyan;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 20%;
+    min-width: 200px;
+    min-height: 720px;
+}
+
+.store-title {
+    background-color: yellow;
+    margin: 25px 0px;
+    width: 80%;
+    height: 10%;
+}
+
+.upgrade-shop {
+    background-color: blue;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 20%;
+}
+
+.upgrade-title {
+    background-color: red;
+    width: 75%;
+    height: 30%;
+}
+
+.upgrades {
+    background-color: green;
+    width: 100%;
+    height: 70%;
+}
+
+.bot-shop {
+    background-color: red;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 62%;
+}
+
+.bot-title {
+    background-color: blue;
+    width: 100%;
+    height: 10%;
+}
+
+.bots {
+    background-color: yellow;
+    width: 100%;
+    height: 90%;
+}
