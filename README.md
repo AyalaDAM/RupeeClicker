@@ -32,12 +32,13 @@ and unlock powers and achievements. It features a simple interface and dynamic f
 ## Project Structure
 
 ```plaintext
-zelda-clicker/
+RupeeClicker!/
 ├── index.html           # Main HTML file
 ├── style.css            # Game styles
 ├── script.js            # Main game logic (rupees, bots, upgrades, achievements)
 ├── assets/              # Icons for rupees, bots, and upgrades
-│   └── sounds/          # Sound effects for clicks and purchases
+│   └── sounds/          # Sound effects for clicks, purchases and upgrades
+│   └── fonts/           # Fonts of the project
 └── README.md            # Project documentation
 ```
 
