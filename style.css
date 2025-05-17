@@ -1,38 +1,74 @@
-:root {
+/*
+Tested in: Firefox.
+Screen resolutions (16:9): 1080p, 1440p
+*/
 
+:root {
+    --ganondorfa: url('assets/ganondorfa.png');
+    --triforce: url('assets/triforce.png');
+    --ocarina: url('assets/ocarina.png');
+    --cape: url('assets/cape.png');
+    --sack: url('assets/sack.png');
+    --tingle: url('assets/tingle.png');
+}
+
+@font-face {
+    font-family: 'zelda';
+    src: url('assets/fonts/Triforce.ttf');
 }
 
 * {
     box-sizing: border-box;
     padding: 0;
     margin: 0;
-    overflow-y: hidden;
+    font-family: zelda;
+    color: white;
+    text-align: center;
+}
+
+body {
+    overflow: hidden;
+    background-image: url('assets/wooden-background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 /* MAIN */
 
 main {
-    background-color: red;
+    /*background-color: red;*/
     display: flex;
     height: 100vh;
     width: 100vw;
 }
 
 .h-separator {
-    background-color: magenta;
+    /* background-color: rgb(0, 58, 17); */
+    background-image: url('assets/wooden-separator-horizontal.jpg');
+    background-repeat: repeat-x;
+    background-size: auto 100%;
+    background-position: left center;
     width: 100%;
     height: 10px;
+    min-width: 10px;
+    min-height: 10px;
 }
 
 .v-separator {
-    background-color: magenta;
+    /* background-color: rgb(0, 58, 17); */
+    background-image: url('assets/wooden-separator.jpg');
+    background-repeat: repeat-y;
+    background-size: 100% auto;
+    background-position: left center;
     width: 10px;
+    min-width: 10px;
 }
 
 /* GAME AREA */
 
 .game-area {
-    background-color: greenyellow;
+    /* background-color: greenyellow; */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -43,7 +79,7 @@ main {
 }
 
 .game-info {
-    background-color: aqua;
+    /* background-color: aqua; */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -52,41 +88,90 @@ main {
 }
 
 .game-name {
-    background-color: blue;
+    /* background-color: blue; */
+    background-color: rgba(0, 0, 0, 0.6);
+    clip-path: polygon(20px 0, calc(100% - 20px) 0, 100% 20px, 100% calc(100% - 20px), calc(100% - 20px) 100%, 20px 100%, 0 calc(100% - 20px), 0 20px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 80%;
     height: 5%;
-    margin: 25px 0px;
+    margin: 25px 0px 15px 0px;
+    padding: 30px;
+    font-size: clamp(22px, 1.5vw, 40px);
 }
 
 .counter {
-    background-color: green;
+    background-color: rgba(0, 0, 0, 0.6);
+    clip-path: polygon(20px 0, calc(100% - 20px) 0, 100% 20px, 100% calc(100% - 20px), calc(100% - 20px) 100%, 20px 100%, 0 calc(100% - 20px), 0 20px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 75%;
     height: 10%;
+    font-size: clamp(30px, 2vw, 40px);
 }
 
 .subcounter {
-    background-color: yellow;
+    /* background-color: rgb(255, 115, 0); */
+    background-color: rgba(0, 0, 0, 0.6);
+    clip-path: polygon(20px 0, calc(100% - 20px) 0, 100% 20px, 100% calc(100% - 20px), calc(100% - 20px) 100%, 20px 100%, 0 calc(100% - 20px), 0 20px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 50%;
-    height: 5%;
+    height: 4%;
+    margin-top: 5px;
     margin-bottom: 15px;
+    padding: 30px;
+    font-size: clamp(30px, 1.5vw, 40px);
 }
 
 .clickable {
-    background-color: red;
-    width: 70%;
-    height: 70%;
+    /*background-color: red;*/
+    background-image: url('assets/rupee.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 40%;
+    height: auto;
+    aspect-ratio: 1/2;
+    cursor: pointer;
+}
+
+.clickable:active {
+    transform: scale(1.1);
 }
 
 .general-info {
     background-color: blue;
+    background-image: url('assets/stone-background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     width: 100%;
     height: 150px;
+}
+
+.general-info-container {
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 30px;
+    gap: 10px;
+    clip-path: polygon(20px 0, calc(100% - 20px) 0, 100% 20px, 100% calc(100% - 20px), calc(100% - 20px) 100%, 20px 100%, 0 calc(100% - 20px), 0 20px);
+    font-size: clamp(13px, 0.5vw, 20px);
 }
 
 /* VISUAL AREA */
 
 .visual-area {
-    background-color: blue;
+    /*background-color: blue;*/
     display: flex;
     flex-direction: column;
     width: 50%;
@@ -95,21 +180,140 @@ main {
 }
 
 .options {
-    background-color: yellow;
+    /* background-color: rgb(255, 115, 0); */
+    background-image: url('assets/stone-background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
     width: 100%;
-    height: 100px;
+    height: 10%;
+    min-height: 75px;
+}
+
+.options > div {
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    clip-path: polygon(20px 0, calc(100% - 20px) 0, 100% 20px, 100% calc(100% - 20px), calc(100% - 20px) 100%, 20px 100%, 0 calc(100% - 20px), 0 20px);
+    width: 25%;
+    height: 75%;
+    margin: 0px 20px;
+    font-size: clamp(15px, 1vw, 40px);
+    cursor: pointer;
+}
+
+.options > div:active {
+    transform: scale(1.1);
 }
 
 .game-bots {
-    background-color: green;
+    /* background-color: green; */
+    background-image: url('assets/wooden-background-vertical.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    gap: 10px;
     width: 100%;
-    height: 100%;
+    height: 90%;
+}
+
+.active-bot {
+    background-color: rgba(0, 0, 0, 0.6);
+    clip-path: polygon(20px 0, calc(100% - 20px) 0, 100% 20px, 100% calc(100% - 20px), calc(100% - 20px) 100%, 20px 100%, 0 calc(100% - 20px), 0 20px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 80%;
+    height: 13%;
+    padding: 25px 50px;
+    font-size: clamp(20px, 1.5vw, 80px);
+}
+
+.icon-tingle {
+    background-image: var(--tingle);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 80%;
+    width: 15%;
+    height: auto;
+    aspect-ratio: 1/1;
+    padding: 10px;
+}
+
+.icon-sack {
+    background-image: var(--sack);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 80%;
+    width: 15%;
+    height: auto;
+    aspect-ratio: 1/1;
+    padding: 10px;
+}
+
+.icon-cape {
+    background-image: var(--cape);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 80%;
+    width: 15%;
+    height: auto;
+    aspect-ratio: 1/1;
+    padding: 10px;
+}
+
+.icon-ocarina {
+    background-image: var(--ocarina);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 90%;
+    width: 15%;
+    height: auto;
+    aspect-ratio: 1/1;
+    padding: 10px;
+}
+
+.icon-triforce {
+    background-image: var(--triforce);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 90%;
+    width: 15%;
+    height: auto;
+    aspect-ratio: 1/1;
+    padding: 10px;
+}
+
+.icon-ganondorfa {
+    background-image: var(--ganondorfa);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 90%;
+    width: 15%;
+    height: auto;
+    aspect-ratio: 1/1;
+    padding: 10px;
 }
 
 /* SHOP AREA */
 
 .store-area {
-    background-color: cyan;
+    /* background-color: cyan; */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -119,51 +323,161 @@ main {
 }
 
 .store-title {
-    background-color: yellow;
+    background-color: rgba(0, 0, 0, 0.6);
+    clip-path: polygon(20px 0, calc(100% - 20px) 0, 100% 20px, 100% calc(100% - 20px), calc(100% - 20px) 100%, 20px 100%, 0 calc(100% - 20px), 0 20px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin: 25px 0px;
     width: 80%;
     height: 10%;
+    font-size: clamp(40px, 3vw, 100px);
 }
 
 .upgrade-shop {
-    background-color: blue;
+    /* background-color: blue; */
+    background-image: url('assets/stone-background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     width: 100%;
     height: 20%;
+    overflow: hidden;
 }
 
 .upgrade-title {
-    background-color: red;
-    width: 75%;
-    height: 30%;
+    /* background-color: red; */
+    background-color: rgba(0, 0, 0, 0.6);
+    clip-path: polygon(20px 0, calc(100% - 20px) 0, 100% 20px, 100% calc(100% - 20px), calc(100% - 20px) 100%, 20px 100%, 0 calc(100% - 20px), 0 20px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60%;
+    height: 20%;
+    margin-top: 10px;
+    font-size: clamp(20px, 1.2vw, 40px);
 }
 
 .upgrades {
-    background-color: green;
-    width: 100%;
+    /* background-color: green; */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 94%;
     height: 70%;
+    gap: 10px;
+}
+
+.upgrade {
+    /* background-color: red; */
+    align-items: center;
+    justify-content: center;
+    width: 20%;
+    min-width: 100px;
+    height: auto;
+    aspect-ratio: 1/1;
+
+}
+
+.upgrade:active {
+    transform: scale(1.1);
+}
+
+.icon-wisdom {
+    background-image: url('assets/wisdom.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 90%;
+    width: 15%;
+    height: auto;
+    aspect-ratio: 1/1;
+    padding: 10px;
+    filter: grayscale(100%);
+}
+
+.icon-power {
+    background-image: url('assets/power.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 90%;
+    width: 15%;
+    height: auto;
+    aspect-ratio: 1/1;
+    padding: 10px;
+    filter: grayscale(100%);
+}
+
+.icon-courage {
+    background-image: url('assets/courage.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 90%;
+    width: 15%;
+    height: auto;
+    aspect-ratio: 1/1;
+    padding: 10px;
+    filter: grayscale(100%);
 }
 
 .bot-shop {
-    background-color: red;
+    /* background-color: red; */
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-between;
     width: 100%;
     height: 62%;
 }
 
 .bot-title {
-    background-color: blue;
-    width: 100%;
-    height: 10%;
+    /* background-color: red; */
+    background-color: rgba(0, 0, 0, 0.6);
+    clip-path: polygon(20px 0, calc(100% - 20px) 0, 100% 20px, 100% calc(100% - 20px), calc(100% - 20px) 100%, 20px 100%, 0 calc(100% - 20px), 0 20px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60%;
+    height: 7%;
+    margin-top: 10px;
+    font-size: clamp(20px, 1.2vw, 40px);
 }
 
 .bots {
-    background-color: yellow;
+    /* background-color: rgb(255, 115, 0); */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
     width: 100%;
     height: 90%;
+    padding-top: 10px;
+}
+
+.bot {
+    /* background-color: red; */
+    background-color: rgba(0, 0, 0, 0.6);
+    clip-path: polygon(20px 0, calc(100% - 20px) 0, 100% 20px, 100% calc(100% - 20px), calc(100% - 20px) 100%, 20px 100%, 0 calc(100% - 20px), 0 20px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 95%;
+    height: auto;
+    max-height: 70px;
+    padding: 25px;
+    aspect-ratio: 6/1;
+    font-size: clamp(13px, 0.7vw, 40px);
+    cursor: pointer;
+}
+
+.bot:active {
+    transform: scale(1.05);
 }

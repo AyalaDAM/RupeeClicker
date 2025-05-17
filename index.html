@@ -14,19 +14,25 @@
 
             <div class="game-info">
                     
-                <div class="game-name"></div>
+                <div class="game-name" id="username">USER'S CHEST</div>
 
-                <div class="counter"></div>
+                <div class="counter" id="counter">0</div>
 
-                <div class="subcounter"></div>
+                <div class="subcounter">RUPEES</div>
 
-                <div class="clickable"></div>
+                <div class="clickable" id="rupee"></div>
 
             </div>
 
             <div class="h-separator"></div>
 
-            <div class="general-info"></div>
+            <div class="general-info">
+                <div class="general-info-container">
+                    <p>DEVELOPED BY: ALEJANDRO AYALA</p>
+                    <p>VERSION: 0.1</p>
+                    <p>LAST UPDATE: 17-05-2025</p>
+                </div>
+            </div>
 
         </div>
 
@@ -36,13 +42,49 @@
         <div class="visual-area">
 
             <div class="options">
-
+                <div class="option-full option">SETTINGS</div>
+                <div class="option-achievements option">ACHIEVEMENTS</div>
+                <div class="fullscreen option" id="fullscreen">FULLSCREEN</div>
             </div>
 
             <div class="h-separator"></div>
 
             <div class="game-bots">
+                <div class="active-bot">
+                    <div class="active-bot-icon icon-tingle"></div>
+                    <div class="active-bot-name">TINGLE'S HELP</div>
+                    <div class="active-bot-quantity">x 0</div>
+                </div>
 
+                <div class="active-bot">
+                    <div class="active-bot-icon icon-sack"></div>
+                    <div class="active-bot-name">SACK</div>
+                    <div class="active-bot-quantity">x 0</div>
+                </div>
+
+                <div class="active-bot" id="cape">
+                    <div class="active-bot-icon icon-cape"></div>
+                    <div class="active-bot-name">ROC'S CAPE</div>
+                    <div class="active-bot-quantity">x 0</div>
+                </div>
+
+                <div class="active-bot" id="ocarina">
+                    <div class="active-bot-icon icon-ocarina"></div>
+                    <div class="active-bot-name">OCARINA</div>
+                    <div class="active-bot-quantity">x 0</div>
+                </div>
+
+                <div class="active-bot" id="triforce">
+                    <div class="active-bot-icon icon-triforce"></div>
+                    <div class="active-bot-name">TRIFORCE</div>
+                    <div class="active-bot-quantity">x 0</div>
+                </div>
+
+                <div class="active-bot" id="ganondorfa">
+                    <div class="active-bot-icon icon-ganondorfa"></div>
+                    <div class="active-bot-name">BOTELLA DE ZORA GRANDE</div>
+                    <div class="active-bot-quantity">x 0</div>
+                </div>
             </div>
 
         </div>
@@ -52,16 +94,18 @@
         <!-- STORE AREA -->
          <div class="store-area">
 
-            <div class="store-title"></div>
+            <div class="store-title">STORE</div>
 
             <div class="h-separator"></div>
 
             <div class="upgrade-shop">
 
-                <div class="upgrade-title"></div>
+                <div class="upgrade-title">POWERS</div>
 
                 <div class="upgrades">
-
+                    <div class="upgrade icon-wisdom" id="wisdom"></div>
+                    <div class="upgrade icon-power" id="power"></div>
+                    <div class="upgrade icon-courage" id="courage"></div>
                 </div>
             </div>
 
@@ -69,10 +113,44 @@
 
             <div class="bot-shop">
 
-                <div class="bot-title"></div>
+                <div class="bot-title">ITEMS</div>
 
                 <div class="bots">
-
+                    <div class="bot" id="bot-tingle">
+                        <div class="bot-icon icon-tingle"></div>
+                        <div class="bot-name">TINGLE'S HELP</div>
+                        <div class="bot-cost">x 100</div>
+                    </div>
+                    
+                    <div class="bot" id="bot-sack">
+                        <div class="bot-icon icon-sack"></div>
+                        <div class="bot-name">SACK</div>
+                        <div class="bot-cost">x 1.500</div>
+                    </div>
+                    
+                    <div class="bot" id="bot-cape">
+                        <div class="bot-icon icon-cape"></div>
+                        <div class="bot-name">ROC'S CAPE</div>
+                        <div class="bot-cost">x 5.000</div>
+                    </div>
+                    
+                    <div class="bot" id="bot-ocarina">
+                        <div class="bot-icon icon-ocarina"></div>
+                        <div class="bot-name">OCARINA</div>
+                        <div class="bot-cost">x 25.000</div>
+                    </div>
+                    
+                    <div class="bot" id="bot-triforce">
+                        <div class="bot-icon icon-triforce"></div>
+                        <div class="bot-name">TRIFORCE</div>
+                        <div class="bot-cost">x 100.000</div>
+                    </div>
+                    
+                    <div class="bot" id="dale">
+                        <div class="bot-icon icon-ganondorfa"></div>
+                        <div class="bot-name">BOTELLA DE ZORA GRANDE</div>
+                        <div class="bot-cost">x 999.999</div>
+                    </div>
                 </div>
 
             </div>
@@ -81,6 +159,6 @@
 
     </main>
     
-    <script src=""></script>
+    <script src="script.js"></script>
 </body>
 </html>
