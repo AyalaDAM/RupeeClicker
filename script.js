@@ -4,6 +4,10 @@ Screen resolutions (16:9): 1080p, 1440p.
 Platform: Windows 10 PC.
 */
 
+/*
+    Añadir funcionalidad para poder Courage (bots a mitad de precio)
+*/
+
 document.addEventListener("DOMContentLoaded", function() {
 
 /*
@@ -78,7 +82,7 @@ var ocarinaPrice = 25000;
 var triforcePrice = 100000;
 var ganondorfaPrice = 999999;
 
-var numberTingle = 5;
+var numberTingle = 0;
 var numberSack = 0;
 var numberCape = 0;
 var numberOcarina = 0;
