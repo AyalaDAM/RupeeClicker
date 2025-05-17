@@ -1,17 +1,13 @@
 /*
-Tested in: Firefox and Chrome.
-Screen resolutions (16:9): 1080p, 1440p.
-Platform: Windows 10 PC.
-*/
-
-/*
-    Añadir funcionalidad para poder Courage (bots a mitad de precio)
+    Tested in: Firefox and Chrome.
+    Screen resolutions (16:9): 1080p, 1440p.
+    Platform: Windows 10 PC.
 */
 
 document.addEventListener("DOMContentLoaded", function() {
 
 /*
-    Variables globales
+    Global variables
 */
 const username = document.getElementById("username");
 
@@ -48,6 +44,7 @@ var flagCheating = false;
 var flagThank = false;
 
 const fullscreenButton = document.getElementById("fullscreen");
+const rupeeSound = new Audio("assets/sounds/get_rupee.mp3");
 const clickOptions = document.querySelectorAll(".option");
 const optionSound = new Audio("assets/sounds/click_options.mp3");
 const upgradeSound = new Audio("assets/sounds/buy_upgrade.mp3");
@@ -74,6 +71,13 @@ var cape = 100;
 var ocarina = 500;
 var triforce = 1000;
 var ganondorfa = 100000;
+
+const tinglePriceText = document.getElementById("price-tingle");
+const sackPriceText = document.getElementById("price-sack");
+const capePriceText = document.getElementById("price-cape");
+const ocarinaPriceText = document.getElementById("price-ocarina");
+const triforcePriceText = document.getElementById("price-triforce");
+const ganondorfaPriceText = document.getElementById("price-ganondorfa");
 
 var tinglePrice = 100;
 var sackPrice = 1500;
@@ -106,18 +110,29 @@ let courageBought = false;
 
 
 /*
-    Login prompt
+    Welcome message and name functionality
 */
     alert("It's recommended to play in fullscreen mode. You can press F11 or the fullscreen option (next to \"Achievements\") to enter fullscreen mode. You can press scape to exit fullscreen mode.");
 
+    /*
+        Function to set the username
+
+        It checks if the name is null, empty, or longer than 12 characters.
+        If so, it prompts the user to enter a valid name.
+        The name is then displayed in uppercase followed by "'S CHEST".
+    */
     function setUsername(name) {
+
         while (name === null || name.trim() === "" || name.length > 12) {
+
             if (name === null || name.trim() === "") {
                 name = prompt("Please, choose a valid name:");
             } else if (name.length > 12) {
                 name = prompt("Names can't be longer than 12 characters:");
             }
+
         }
+
         username.textContent = name.toString().toUpperCase() + "'S CHEST";
     }
 
@@ -128,16 +143,22 @@ let courageBought = false;
 
 
 /*
-    Sounds
+    Sounds functions and events
 */
     let backgroundMusic;
 
+    /*
+        Function to play background music when the user enters fullscreen mode
+        or clicks the fullscreen button.
+    */
     function playBackgroundMusic() {
+
+        // Checks if the background music is already playing
         if (!backgroundMusic) {
-        backgroundMusic = new Audio("assets/sounds/background_music.mp3");
-        backgroundMusic.loop = true;
-        backgroundMusic.volume = 0.05;
-        backgroundMusic.play();
+            backgroundMusic = new Audio("assets/sounds/background_music.mp3");
+            backgroundMusic.loop = true;
+            backgroundMusic.volume = 0.05;
+            backgroundMusic.play();
         }
     }
 
@@ -151,8 +172,6 @@ let courageBought = false;
         playBackgroundMusic();
     });
 
-
-    const rupeeSound = new Audio("assets/sounds/get_rupee.mp3");
 
     rupee.addEventListener("click", () => {
         rupeeSound.currentTime = 0;
@@ -170,6 +189,9 @@ let courageBought = false;
     });
 
 
+    /*
+        Function to play the upgrade sound. This sound is also played by other events.
+    */
     function playUpgradeSound() {
         upgradeSound.currentTime = 0;
         upgradeSound.volume = 0.3;
@@ -177,6 +199,9 @@ let courageBought = false;
     }
 
 
+    /*
+        Function to play the bot sound. This sound is played when the user buys a bot.
+    */
     function playBotsSound() {
         botSound.currentTime = 0;
         botSound.volume = 0.3;
@@ -184,6 +209,14 @@ let courageBought = false;
     }
 
 
+    /*
+        Function to play the Dale sound.
+        
+        This sound is played when the user buys ganondorfa bot.
+        If the sound is already playing, it doesn't play.
+        It pauses the background music and plays the Dale sound.
+        After 99 seconds, it resumes the background music.
+    */
     function playDaleSound() {
         if (!daleSound.paused || daleSound.currentTime > 0) {
             return;
@@ -192,6 +225,7 @@ let courageBought = false;
         if (backgroundMusic) {
             backgroundMusic.pause();
         }
+
         daleSound.currentTime = 0;
         daleSound.volume = 0.3;
         daleSound.play();
@@ -206,10 +240,15 @@ let courageBought = false;
 
 
 /*
-    Fullscreen mode
+    Fullscreen functionality
 */
     const element = document.documentElement;
     
+    /*
+        Function to enter fullscreen mode.
+
+        It checks different ways to enter the full screen mode.
+    */
     function enterFullscreen() {
         if (element.requestFullscreen) {
             element.requestFullscreen();
@@ -227,8 +266,15 @@ let courageBought = false;
 
 
 /*
-    Rupees image change
+    Rupees image changing functionality
 */
+
+    /*
+        Function to change the rupee image based on the value passed.
+
+        The value passed depends on the amount of rupees the user has.
+        The function is called in the formatNumber function after some checks.
+    */
     function changeRupeeImage(value) {
         switch (value) {
             case "green":
@@ -252,8 +298,11 @@ let courageBought = false;
 
 
 /*
-    Options menu
+    Options menu functionality
 */
+    /*
+        Event listeners that shows the options overlay when the user clicks on the options button.
+    */
     document.querySelector('.option-full').addEventListener('click', () => {
         document.getElementById('options-overlay').style.display = 'flex';
     });
@@ -267,20 +316,31 @@ let courageBought = false;
 
 
 /*
-    Options
+    Options functionality
+
+    The options are:
+        - Change name
+        - Reset rupees
+        - Reset all
+        - Turbo mode
+        - Github
 */
+    /*
+        Event listener that asks the user for a new name, calls the setUsername function and plays the upgrade sound.
+    */
     changeNameButton.addEventListener("click", () => {
         let newName = prompt("Enter your new name:");
-
-        while (newName === null || newName.trim() === "") {
-            newName = prompt("Please enter a valid name:");
-        }
-
         setUsername(newName);
         playUpgradeSound();
         alert("Name successfully changed!");
     });
 
+    /*
+        Event listener that asks the user if they want to reset their rupees.
+
+        If the user confirms, it resets the current value to 0, updates the
+        counter and changes the rupee image to green calling the changeRupeeImage function.
+    */
     resetRupeesButton.addEventListener("click", () => {
         if (confirm("Are you sure you want to reset your rupees?")) {
             currentValue = 0;
@@ -290,6 +350,12 @@ let courageBought = false;
         }
     });
 
+    /*
+        Event listener that asks the user if they want to reset everything.
+
+        If the user confirms, it resets all the variables to their initial values,
+        updates the visual bots, updates the bots availability and updates the counter.
+    */
     resetAllButton.addEventListener("click", () => {
         if (confirm("⚠️ Are you sure you want to reset EVERYTHING?")) {
             clickCounter = 0;
@@ -343,11 +409,21 @@ let courageBought = false;
         }
     });
 
+    /*
+        Event listener that allows the user to activate turbo mode.
+
+        It asks the user for a multiplier and updates the turbo mode variable.
+        This variable multiplies all the rupees increments.
+    */
     turboButton.addEventListener("click", () => {
+
         const value = prompt("Choose your turbo multiplier:");
         const turboValue = parseInt(value, 10);
 
+        // Check if the value is a number
         if (!isNaN(turboValue)) {
+
+            // If the Cheating achievement is not activated, activates it.
             if (!flagCheating) {
                 updateAchievement("cheating");
             }
@@ -355,11 +431,16 @@ let courageBought = false;
             turboMode = turboValue;
             playUpgradeSound();
             alert("Turbo mode activated x " + turboMode + "!");
+
         } else {
             alert("Invalid turbo value.");
         }
     });
 
+    /*
+        Event listener that activates the Github achievement when the user
+        clicks the Github button if it's not already activated.
+    */
     githubButton.addEventListener("click", () => {
         if (!flagThank) {
             updateAchievement("thank");
@@ -369,8 +450,22 @@ let courageBought = false;
 
 
 /*
-    Achievements
+    Achievements functionality
+
+    The achievements are:
+        - First click
+        - Tingle
+        - Deity
+        - Banker
+        - Tryhard
+        - Hero
+        - Dale
+        - Cheating
+        - Thank you for playing!
 */
+    /*
+        Events listeners that show the achievements overlay when the user clicks on the achievements option.
+    */
     document.querySelector('.option-achievements').addEventListener('click', () => {
         document.getElementById('achievements-overlay').style.display = 'flex';
     });
@@ -381,6 +476,12 @@ let courageBought = false;
         }
     });
 
+    /*
+        Function to refresh the achievements overlay.
+
+        It checks if the user has achieved the achievement and updates the background
+        color of the achievement depeding on the parameter passed.
+    */
     function updateAchievement(ach) {
         switch (ach) {
             case "first":
@@ -434,8 +535,12 @@ let courageBought = false;
 
 
 /*
-    Bots availability
+    Bots availability functionality
 */
+    /*
+        Function to update the colors of the bots if the user has enough rupees
+        to buy them.
+    */
     function updateBotsAvailability() {
         botTingle.style.filter = currentValue >= tinglePrice ? "none" : "grayscale(100%)";
         botSack.style.filter = currentValue >= sackPrice ? "none" : "grayscale(100%)";
@@ -448,8 +553,14 @@ let courageBought = false;
 
 
 /*
-    Rupees increments
+    Rupees increments functionality
 */
+    /*
+        Function to format the number of rupees if this number is too big.
+
+        It also changes the rupee image depending on the number of rupees.
+        The function is called in the updateCounter function.
+    */
     function formatNumber(num) {
         if (num >= 1e12) {
             changeRupeeImage("gold");
@@ -469,6 +580,14 @@ let courageBought = false;
         return num.toString();
     }
 
+    /*
+        Function to update the counter of rupees.
+
+        It checks if the user has achieved the banker and tryhard achievements.
+        It calls the updateBotsAvailability function to update the colors of the bots.
+        It also calls the refreshAchievements function to update the achievements overlay.
+
+    */
     function updateCounter() {
         if (currentValue >= 1000000 && !flagBanker) {
             updateAchievement("banker");
@@ -483,6 +602,14 @@ let courageBought = false;
         refreshAchievements()
     }
 
+    /*
+        Function to obtain rupees when the user clicks on the rupee.
+
+        It checks if the user has achieved the first click achievement.
+        It increments the current value of rupees by 1 and multiplies it by the
+        power and turbo mode.
+        It also increments the click counter and calls the updateCounter function.
+    */
     function clickRupee() {
         if (!flagFirstClick) {
             updateAchievement("first");
@@ -496,6 +623,14 @@ let courageBought = false;
 
     rupee.addEventListener("click", clickRupee);
 
+
+    /*
+        Functions to obtain certain amount of rupees every 100ms
+        
+        The amount of rupees obtained depends on the number of bots the user has,
+        the current value that the bot provides and the wisdom power and turbo mode.
+        They call the updateCounter function to update the counter.
+    */
     function tingleBot() {
         currentValue += tingle * numberTingle * wisdom * turboMode;
         updateCounter();
@@ -535,28 +670,68 @@ let courageBought = false;
 
 
 /*
-    Upgrade shop
+    Upgrade shop functionality
+
+    The upgrades are:
+        - Power
+        - Wisdom
+        - Courage
 */
+    /*
+        Variables to check if the user has activated the listeners
+    */
     let powerListenerAdded = false;
     let wisdomListenerAdded = false;
     let courageListenerAdded = false;
 
+    /*
+        Function to check the hero achievement.
+
+        It checks if the user has bought all the upgrades and if the hero achievement
+        is not already activated in order to activate it.
+        It calls the updateAchievement function to activate the hero achievement.
+    */
     function checkHeroAchievement() {
         if (powerBought && wisdomBought && courageBought && !flagHero) {
             updateAchievement("hero");
         }
     }
 
+    /*
+        Function to check if the user can bought the upgrades.
+
+        It checks if the user has enough rupees and if the upgrade is not already bought.
+        The conditions depends of the upgrade.
+        It also activates achievements if the user has not already activated them.
+        It plays the upgrade sound and shows an alert with the information of the upgrade.
+        It removes the listeners if the user has already bought the upgrade.
+    */
     function checkUpgrades() {
         
+        // Checks if the user has enought Tingle bots to buy the Power upgrade
+        // and if the user has not already bought it.
         if (!powerBought && numberTingle >= 10 && !powerListenerAdded) {
+
+            // If the user has not already activated the Tingle achievement,
+            // it activates it.
             if (!flagTingle) {
                 updateAchievement("tingle");
             }
 
             powerPower.style.filter = 'none';
 
+            /*
+                Function to buy the Power upgrade.
+
+                It checks if the user has not already activated the Deity achievement.
+                It also plays the upgrade sound and shows an alert with the information
+                of the upgrade.
+                It removes the listener when the user buys the upgrade.
+            */
             function buyPower() {
+
+                // If the user has not already activated the Deity achievement,
+                // it activates it.
                 if (!flagDeity) {
                     updateAchievement("deity");
                 }
@@ -568,6 +743,8 @@ let courageBought = false;
                 powerPower.removeEventListener("click", buyPower);
                 powerListenerAdded = false;
 
+                // Check if the user has bought all the upgrades to activate the
+                // Hero achievement
                 checkHeroAchievement();
             }
 
@@ -575,10 +752,23 @@ let courageBought = false;
             powerListenerAdded = true;
         }
 
+        // Checks if the user has enought rupees to buy the Wisdom upgrade
+        // and if the user has not already bought it.
         if (!wisdomBought && currentValue >= 25000 && !wisdomListenerAdded) {
             wisdomPower.style.filter = 'none';
 
+            /*
+                Function to buy the Wisdom upgrade.
+
+                It checks if the user has not already activated the Deity achievement.
+                It also plays the upgrade sound and shows an alert with the information
+                of the upgrade.
+                It removes the listener when the user buys the upgrade.
+            */
             function buyWisdom() {
+
+                // If the user has not already activated the Deity achievement,
+                // it activates it.
                 if (!flagDeity) {
                     updateAchievement("deity");
                 }
@@ -590,6 +780,8 @@ let courageBought = false;
                 wisdomPower.removeEventListener("click", buyWisdom);
                 wisdomListenerAdded = false;
 
+                // Check if the user has bought all the upgrades to activate the
+                // Hero achievement
                 checkHeroAchievement();
             }
 
@@ -597,10 +789,23 @@ let courageBought = false;
             wisdomListenerAdded = true;
         }
 
+        // Checks if the user has enought rupees to buy the Courage upgrade
+        // and if the user has not already bought it.
         if (!courageBought && clickCounter >= 100 && !courageListenerAdded) {
             couragePower.style.filter = 'none';
 
+            /*
+                Function to buy the Courage upgrade.
+
+                It checks if the user has not already activated the Deity achievement.
+                It also plays the upgrade sound and shows an alert with the information
+                of the upgrade.
+                It removes the listener when the user buys the upgrade.
+            */
             function buyCourage() {
+
+                // If the user has not already activated the Deity achievement,
+                // it activates it.
                 if (!flagDeity) {
                     updateAchievement("deity");
                 }
@@ -612,6 +817,11 @@ let courageBought = false;
                 couragePower.removeEventListener("click", buyCourage);
                 courageListenerAdded = false;
 
+                // Update the prices of the bots
+                updateBotPricesVisual();
+
+                // Check if the user has bought all the upgrades to activate the
+                // Hero achievement
                 checkHeroAchievement();
             }
 
@@ -627,8 +837,22 @@ let courageBought = false;
 
 
 /*
-    Active bots
+    Active bots functionality
+
+    The bots are:
+        - Tingle
+        - Sack
+        - Cape
+        - Ocarina
+        - Triforce
+        - Ganondorfa
 */
+    /*
+        Function to update the visual amount of bots.
+
+        It updates the text content of the bot depending on the bot name passed.
+        The function is called in the bots shop functions.
+    */
     function updateVisualBots(botName) {
         switch (botName) {
             case "tingle":
@@ -655,77 +879,118 @@ let courageBought = false;
 
 
 /*
-    Bots shop
+    Courage power functionality
 */
+    /*
+        Function to format the price of the bots.
+
+        It formats the price to add dots every 3 digits.
+    */
+    function formatPriceWithDots(num) {
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+
+    /*
+        Function to update the prices of the bots.
+
+        It updates the text content of the bot prices if the user has the courage power.
+    */
+    function updateBotPricesVisual() {
+        tinglePriceText.textContent = formatPriceWithDots("x " + (Math.floor(tinglePrice / courage)));
+        sackPriceText.textContent = formatPriceWithDots("x " + (Math.floor(sackPrice / courage)));
+        capePriceText.textContent = formatPriceWithDots("x " + (Math.floor(capePrice / courage)));
+        ocarinaPriceText.textContent = formatPriceWithDots("x " + (Math.floor(ocarinaPrice / courage)));
+        triforcePriceText.textContent = formatPriceWithDots("x " + (Math.floor(triforcePrice / courage)));
+        ganondorfaPriceText.textContent = formatPriceWithDots("x " + (Math.floor(ganondorfaPrice / courage)));
+    }
+
+
+
+/*
+    Bots shop functionality
+*/
+    /*
+        Event listeners that check if the user has enough rupees to buy the bots.
+
+        If so, it plays the bot sound, increments the number of bots, decrements
+        the current value of rupees and updates the visual amount of bots.
+    */
     botTingle.addEventListener("click", function() {
 
-        if (currentValue >= tinglePrice) {
+        if (currentValue >= tinglePrice / courage) {
             playBotsSound()
             numberTingle++;
             currentValue -= tinglePrice;
             updateVisualBots("tingle");
             updateCounter();
+            updateBotPricesVisual();
         }
     });
 
     botSack.addEventListener("click", function() {
 
-        if (currentValue >= sackPrice) {
+        if (currentValue >= sackPrice / courage) {
             playBotsSound()
             numberSack++;
             currentValue -= sackPrice;
             updateVisualBots("sack");
             updateCounter();
+            updateBotPricesVisual();
         }
     });
 
     botCape.addEventListener("click", function() {
 
-        if (currentValue >= capePrice) {
+        if (currentValue >= capePrice / courage) {
             playBotsSound()
             numberCape++;
             currentValue -= capePrice;
             updateVisualBots("cape");
             updateCounter();
+            updateBotPricesVisual();
         }
     });
 
     botOcarina.addEventListener("click", function() {
 
-        if (currentValue >= ocarinaPrice) {
+        if (currentValue >= ocarinaPrice / courage) {
             playBotsSound()
             numberOcarina++;
             currentValue -= ocarinaPrice;
             updateVisualBots("ocarina");
             updateCounter();
+            updateBotPricesVisual();
         }
     });
 
     botTriforce.addEventListener("click", function() {
 
-        if (currentValue >= triforcePrice) {
+        if (currentValue >= triforcePrice / courage) {
             playBotsSound()
             numberTriforce++;
             currentValue -= triforcePrice;
             updateVisualBots("triforce");
             updateCounter();
+            updateBotPricesVisual();
         }
     });
 
     botGanondorfa.addEventListener("click", function() {
 
-        if (currentValue >= ganondorfaPrice) {
+        if (currentValue >= ganondorfaPrice / courage) {
+
+            // If the user has not already activated the Dale achievement,
+            // it activates it.
             if (!flagDale) {
                 updateAchievement("dale");
             }
+
             playDaleSound()
             numberGanondorfa++;
             currentValue -= ganondorfaPrice;
             updateVisualBots("ganondorfa");
             updateCounter();
+            updateBotPricesVisual();
         }
     });
-
-
-
 });
