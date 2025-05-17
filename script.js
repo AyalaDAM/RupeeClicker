@@ -1,21 +1,19 @@
-/* 
-Features:
-- Pantalla de log in para introducir nombre
-
-En Opciones:
-- Botón para mostrar todas las opciones
-- Mostrar logros
-- Algunos atajos u opciones útiles
-
+/*
 En mostrar todas las opciones:
-- Cambio de nombre
-- Reset de rupias
-- Reset de todo
-- Modo turbo (todo se genera el doble de rápido)
+    - Cambio de nombre
+    - Reset de rupias
+    - Reset de todo
+    - Modo turbo (a elegir el multiplicador)
+
+Añadir que los bots estén en gris si no se pueden comprar en
+lugar de que salte la alerta.
 
 El objetivo es conseguir la botella de zora grande y cuando se
 consigue empieza a sonar dale zelda dale además de obtener un
 logro final.
+
+Bugs:
+    - En Chrome no se puede obtener la botella de zora grande
 */
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -27,21 +25,31 @@ var clickCounter = 0;
 
 const rupee = document.getElementById("rupee");
 const counter = document.getElementById("counter");
-var currentValue = 0;
+currentValue = parseInt(counter.textContent, 10) || 0;
+
+const botSound = new Audio("assets/sounds/buy_bot.mp3");
+const daleSound = new Audio("assets/sounds/DALE_ZELDA_DALE.mp3");
 
 const botTingle = document.getElementById("bot-tingle");
 const botSack = document.getElementById("bot-sack");
 const botCape = document.getElementById("bot-cape");
 const botOcarina = document.getElementById("bot-ocarina");
 const botTriforce = document.getElementById("bot-triforce");
-const botGanondorfa = document.getElementById("bot-ganondorfa");
+const botGanondorfa = document.getElementById("dale");
 
-const tingle = 10;
-const sack = 100;
-const cape = 1000;
-const ocarina = 5000;
-const triforce = 10000;
-const ganondorfa = 1000000;
+const quantityTingle = document.getElementById("quantity-tingle");
+const quantitySack = document.getElementById("quantity-sack");
+const quantityCape = document.getElementById("quantity-cape");
+const quantityOcarina = document.getElementById("quantity-ocarina");
+const quantityTriforce = document.getElementById("quantity-triforce");
+const quantityGanondorfa = document.getElementById("quantity-ganondorfa");
+
+const tingle = 1;
+const sack = 10;
+const cape = 100;
+const ocarina = 500;
+const triforce = 1000;
+const ganondorfa = 100000;
 
 var tinglePrice = 100;
 var sackPrice = 1500;
@@ -50,18 +58,17 @@ var ocarinaPrice = 25000;
 var triforcePrice = 100000;
 var ganondorfaPrice = 999999;
 
-var numberTingle = 5;
+var numberTingle = 3;
 var numberSack = 0;
 var numberCape = 0;
 var numberOcarina = 0;
 var numberTriforce = 0;
 var numberGanondorfa = 0;
 
-var currentValue = parseInt(counter.textContent, 10);
 var wisdom = 1;
 var power = 1;
 var courage = 1;
-var turboMode = 1;
+var turboMode = 100;
 
 
 
@@ -134,38 +141,35 @@ var turboMode = 1;
     });
 
 
-    const upgrades = document.querySelectorAll(".upgrade");
-    const upgradeSound = new Audio("assets/sounds/buy_upgrade.mp3");
+    function playUpgradeSound() {
+        const upgradeSound = new Audio("assets/sounds/buy_upgrade.mp3");
 
-    upgrades.forEach(option => {
-        option.addEventListener("click", () => {
-            upgradeSound.currentTime = 0;
-            upgradeSound.volume = 0.3;
-            upgradeSound.play();
-        });
-    });
+        upgradeSound.currentTime = 0;
+        upgradeSound.volume = 0.3;
+        upgradeSound.play();
+    }
 
 
-    const bots = document.querySelectorAll(".bot");
-    const botSound = new Audio("assets/sounds/buy_bot.mp3");
-
-    bots.forEach(bot => {
-        bot.addEventListener("click", () => {
-            botSound.currentTime = 0;
-            botSound.volume = 0.3;
-            botSound.play();
-        });
-    });
+    function playBotsSound() {
+        botSound.currentTime = 0;
+        botSound.volume = 0.3;
+        botSound.play();
+    }
 
 
-    const dale = document.getElementById("dale");
-    const daleSound = new Audio("assets/sounds/DALE_ZELDA_DALE.mp3");
+    function playDaleSound() {
+        if (daleSound.paused) {
+            backgroundMusic.pause();
 
-    dale.addEventListener("click", () => {
-        daleSound.currentTime = 0;
-        daleSound.volume = 0.3;
-        daleSound.play();
-    });
+            daleSound.currentTime = 0;
+            daleSound.volume = 0.3;
+            daleSound.play();
+        }
+
+        setTimeout(() => {
+            backgroundMusic.play();
+        }, 99000);
+    }
 
 
 
@@ -205,7 +209,7 @@ var turboMode = 1;
     }
 
     function clickRupee() {
-        currentValue += 1 * power;
+        currentValue += 1 * power * turboMode;
         clickCounter++;
         updateCounter();
     }
@@ -213,40 +217,40 @@ var turboMode = 1;
     rupee.addEventListener("click", clickRupee);
 
     function tingleBot() {
-        currentValue += tingle * numberTingle * wisdom;
+        currentValue += tingle * numberTingle * wisdom * turboMode;
         updateCounter();
     }
-    setInterval(tingleBot, 1000);
+    setInterval(tingleBot, 100);
 
     function sackBot() {
-        currentValue += sack * numberSack * wisdom;
+        currentValue += sack * numberSack * wisdom * turboMode;
         updateCounter();
     }
-    setInterval(sackBot, 1000);
+    setInterval(sackBot, 100);
 
     function capeBot() {
-        currentValue += cape * numberCape * wisdom;
+        currentValue += cape * numberCape * wisdom * turboMode;
         updateCounter();
     }
-    setInterval(capeBot, 1000);
+    setInterval(capeBot, 100);
 
     function ocarinaBot() {
-        currentValue += ocarina * numberOcarina * wisdom;
+        currentValue += ocarina * numberOcarina * wisdom * turboMode;
         updateCounter();
     }
-    setInterval(ocarinaBot, 1000);
+    setInterval(ocarinaBot, 100);
 
     function triforceBot() {
-        currentValue += triforce * numberTriforce * wisdom;
+        currentValue += triforce * numberTriforce * wisdom * turboMode;
         updateCounter();
     }
-    setInterval(triforceBot, 1000);
+    setInterval(triforceBot, 100);
 
     function ganondorfaBot() {
-        currentValue += ganondorfa * numberGanondorfa * wisdom;
+        currentValue += ganondorfa * numberGanondorfa * wisdom * turboMode;
         updateCounter();
     }
-    setInterval(ganondorfaBot, 1000);
+    setInterval(ganondorfaBot, 100);
 
 
 
@@ -262,39 +266,85 @@ var turboMode = 1;
     let courageBought = false;
 
     function checkUpgrades() {
-
         if (!powerBought && numberTingle >= 10) {
             powerPower.style.filter = 'none';
-            powerPower.addEventListener("click", function buyPower() {
+
+            function buyPower() {
+                powerBought = true;
+                playUpgradeSound();
                 power = 2;
                 alert("You have bought the Power upgrade! Now every click on the rupee gets 2 rupees!");
-                powerBought = true;
                 powerPower.removeEventListener("click", buyPower);
-            });
+            }
+
+            powerPower.addEventListener("click", buyPower);
+
+            // Cambiamos powerBought para que no añada otro listener
+            powerBought = true;
         }
 
+        // Igual con las otras dos mejoras
         if (!wisdomBought && currentValue >= 25000) {
             wisdomPower.style.filter = 'none';
-            wisdomPower.addEventListener("click", function buyWisdom() {
+
+            function buyWisdom() {
+                wisdomBought = true;
+                playUpgradeSound();
                 wisdom = 2;
                 alert("You have bought the Wisdom upgrade! Now all the items effects are doubled!");
-                wisdomBought = true;
                 wisdomPower.removeEventListener("click", buyWisdom);
-            });
+            }
+
+            wisdomPower.addEventListener("click", buyWisdom);
+            wisdomBought = true;
         }
 
         if (!courageBought && clickCounter >= 100) {
             couragePower.style.filter = 'none';
-            couragePower.addEventListener("click", function buyCourage() {
+
+            function buyCourage() {
+                courageBought = true;
+                playUpgradeSound();
                 courage = 2;
                 alert("You have bought the Courage upgrade! Now all the items are cheaper!");
-                courageBought = true;
                 couragePower.removeEventListener("click", buyCourage);
-            });
+            }
+
+            couragePower.addEventListener("click", buyCourage);
+            courageBought = true;
         }
     }
 
     setInterval(checkUpgrades, 500);
+
+
+
+
+/*
+    Active bots
+*/
+    function updateVisualBots(botName) {
+        switch (botName) {
+            case "tingle":
+                quantityTingle.textContent = "x " + numberTingle;
+                break;
+            case "sack":
+                quantitySack.textContent = "x " + numberSack;
+                break;
+            case "cape":
+                quantityCape.textContent = "x " + numberCape;
+                break;
+            case "ocarina":
+                quantityOcarina.textContent = "x " + numberOcarina;
+                break;
+            case "triforce":
+                quantityTriforce.textContent = "x " + numberTriforce;
+                break;
+            case "ganondorfa":
+                quantityGanondorfa.textContent = "x " + numberGanondorfa;
+                break;
+        }
+    }
 
 
 
@@ -304,15 +354,80 @@ var turboMode = 1;
     botTingle.addEventListener("click", function() {
 
         if (currentValue >= tinglePrice) {
+            playBotsSound()
             numberTingle++;
             currentValue -= tinglePrice;
+            updateVisualBots("tingle");
             updateCounter();
         } else {
             alert("Not enough rupees to buy Tingle's Help!");
         }
     });
 
-    updateCounter();
+    botSack.addEventListener("click", function() {
+
+        if (currentValue >= sackPrice) {
+            playBotsSound()
+            numberSack++;
+            currentValue -= sackPrice;
+            updateVisualBots("sack");
+            updateCounter();
+        } else {
+            alert("Not enough rupees to buy the Big Sack!");
+        }
+    });
+
+    botCape.addEventListener("click", function() {
+
+        if (currentValue >= capePrice) {
+            playBotsSound()
+            numberCape++;
+            currentValue -= capePrice;
+            updateVisualBots("cape");
+            updateCounter();
+        } else {
+            alert("Not enough rupees to buy the Roc'sCape!");
+        }
+    });
+
+    botOcarina.addEventListener("click", function() {
+
+        if (currentValue >= ocarinaPrice) {
+            playBotsSound()
+            numberOcarina++;
+            currentValue -= ocarinaPrice;
+            updateVisualBots("ocarina");
+            updateCounter();
+        } else {
+            alert("Not enough rupees to buy the Ocarina!");
+        }
+    });
+
+    botTriforce.addEventListener("click", function() {
+
+        if (currentValue >= triforcePrice) {
+            playBotsSound()
+            numberTriforce++;
+            currentValue -= triforcePrice;
+            updateVisualBots("triforce");
+            updateCounter();
+        } else {
+            alert("Not enough rupees to buy the Triforce!");
+        }
+    });
+
+    botGanondorfa.addEventListener("click", function() {
+
+        if (currentValue >= ganondorfaPrice) {
+            playDaleSound()
+            numberGanondorfa++;
+            currentValue -= ganondorfaPrice;
+            updateVisualBots("ganondorfa");
+            updateCounter();
+        } else {
+            alert("Not enough rupees to buy Bachatita!");
+        }
+    });
 
 
 
