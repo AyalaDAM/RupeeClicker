@@ -34,6 +34,8 @@ body {
     background-repeat: no-repeat;
 }
 
+
+
 /*
 
 ###########################################################################
@@ -74,6 +76,8 @@ main {
     min-width: 10px;
 }
 
+
+
 /*
 
 ###########################################################################
@@ -94,6 +98,8 @@ main {
     min-width: 400px;
     min-height: 720px;
 }
+
+
 
 /*
 
@@ -171,6 +177,7 @@ main {
 }
 
 
+
 /*
 
 ---------------------------------------------------------------------------
@@ -206,6 +213,8 @@ main {
     font-size: clamp(13px, 0.5vw, 20px);
 }
 
+
+
 /*
 
 ###########################################################################
@@ -224,6 +233,8 @@ main {
     min-width: 500px;
     min-height: 720px;
 }
+
+
 
 /*
 
@@ -335,6 +346,32 @@ main {
     background-color: rgba(255, 255, 255, 0.089);
 }
 
+#achievement-notif {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: rgba(26, 136, 22, 0.7);
+  padding: 15px 25px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  opacity: 0;
+  transform: translateY(-100%);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  z-index: 1000;
+}
+
+#achievement-notif.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+#achievement-notif.hidden {
+  opacity: 0;
+  transform: translateY(-100%);
+}
+
+
+
 /*
 
 ---------------------------------------------------------------------------
@@ -444,6 +481,8 @@ main {
     padding: 10px;
 }
 
+
+
 /*
 
 ###########################################################################
@@ -475,6 +514,8 @@ main {
     height: 10%;
     font-size: clamp(40px, 3vw, 100px);
 }
+
+
 
 /*
 
@@ -578,6 +619,8 @@ main {
     padding: 10px;
     filter: grayscale(100%);
 }
+
+
 
 /*
 

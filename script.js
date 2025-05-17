@@ -33,6 +33,8 @@ const achDale = document.getElementById("achievement-dale");
 const achCheating = document.getElementById("achievement-cheating");
 const achThank = document.getElementById("achievement-thank");
 
+const notification = document.getElementById("achievement-notif");
+
 var flagFirstClick = false;
 var flagTingle = false;
 var flagDeity = false;
@@ -476,57 +478,89 @@ let courageBought = false;
         }
     });
 
+
+    /*
+        Function to show notifications when the user unlocks an achievement.
+
+        It receives the text of the achievement as a parameter and updates the
+        text content of the notification element.
+        It shows the notification for 3 seconds and then hides it.
+    */
+    function showAchievementNotification(text) {
+
+        notification.textContent = text;
+
+        notification.classList.remove("hidden");
+        notification.classList.add("show");
+
+        setTimeout(() => {
+            notification.classList.remove("show");
+            notification.classList.add("hidden");
+        }, 3000);
+    }
+
+
     /*
         Function to refresh the achievements overlay.
 
         It checks if the user has achieved the achievement and updates the background
         color of the achievement depeding on the parameter passed.
+        It also calls the showAchievementNotification function with the text of the achievement.
     */
     function updateAchievement(ach) {
         switch (ach) {
             case "first":
                 flagFirstClick = true;
                 achFirstClick.style.backgroundColor = "rgba(26, 136, 22, 0.6)";
+                showAchievementNotification("ACHIEVEMENT UNLOCKED: FIRST CLICK!");
                 playUpgradeSound();
                 break;
             case "tingle":
                 flagTingle = true;
                 achTingle.style.backgroundColor = "rgba(26, 136, 22, 0.6)";
+                showAchievementNotification("ACHIEVEMENT UNLOCKED: TINGLES!");
                 playUpgradeSound();
                 break;
             case "deity":
                 flagDeity = true;
                 achDeity.style.backgroundColor = "rgba(26, 136, 22, 0.6)";
+                showAchievementNotification("ACHIEVEMENT UNLOCKED: DEITY!");
                 playUpgradeSound();
                 break;
             case "banker":
                 flagBanker = true;
                 achBanker.style.backgroundColor = "rgba(26, 136, 22, 0.6)";
+                showAchievementNotification("ACHIEVEMENT UNLOCKED: BANKER!");
                 playUpgradeSound();
                 break;
             case "tryhard":
                 flagTryhard = true;
                 achTryhard.style.backgroundColor = "rgba(26, 136, 22, 0.6)";
+                showAchievementNotification("ACHIEVEMENT UNLOCKED: TRYHARD!");
                 playUpgradeSound();
                 break;
             case "hero":
                 flagHero = true;
                 achHero.style.backgroundColor = "rgba(26, 136, 22, 0.6)";
+                showAchievementNotification("ACHIEVEMENT UNLOCKED: HERO!");
                 playUpgradeSound();
                 break;
             case "dale":
                 flagDale = true;
                 achDale.style.backgroundColor = "rgba(26, 136, 22, 0.6)";
+                showAchievementNotification("ACHIEVEMENT UNLOCKED: DALE ZELDA DALE!");
                 playUpgradeSound();
                 break;
             case "cheating":
                 flagCheating = true;
                 achCheating.style.backgroundColor = "rgba(26, 136, 22, 0.6)";
+                showAchievementNotification("ACHIEVEMENT UNLOCKED: CHEATING!");
                 playUpgradeSound();
                 break;
             case "thank":
                 flagThank = true;
                 achThank.style.backgroundColor = "rgba(26, 136, 22, 0.6)";
+                showAchievementNotification("ACHIEVEMENT UNLOCKED: THANK YOU FOR PLAYING!");
                 playUpgradeSound();
                 break;
         }
