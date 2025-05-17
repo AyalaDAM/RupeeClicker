@@ -328,7 +328,8 @@ let courageBought = false;
         - Github
 */
     /*
-        Event listener that asks the user for a new name, calls the setUsername function and plays the upgrade sound.
+        Event listener that asks the user for a new name, calls the setUsername function and
+        plays the upgrade sound.
     */
     changeNameButton.addEventListener("click", () => {
         let newName = prompt("Enter your new name:");
@@ -466,7 +467,8 @@ let courageBought = false;
         - Thank you for playing!
 */
     /*
-        Events listeners that show the achievements overlay when the user clicks on the achievements option.
+        Events listeners that show the achievements overlay when the user clicks on
+        the achievements option.
     */
     document.querySelector('.option-achievements').addEventListener('click', () => {
         document.getElementById('achievements-overlay').style.display = 'flex';
