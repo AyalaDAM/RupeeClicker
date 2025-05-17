@@ -1,3 +1,9 @@
+<!-- 
+    Tested in: Firefox and Chrome.
+    Screen resolutions (16:9): 1080p, 1440p.
+    Platform: Windows 10 PC.
+-->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,7 +20,7 @@
 
             <div class="game-info">
                     
-                <div class="game-name" id="username">USER'S CHEST</div>
+                <div class="game-name" id="username">LINK'S CHEST</div>
 
                 <div class="counter" id="counter">0</div>
 
@@ -29,7 +35,7 @@
             <div class="general-info">
                 <div class="general-info-container">
                     <p>DEVELOPED BY: ALEJANDRO AYALA</p>
-                    <p>VERSION: 0.1</p>
+                    <p>VERSION: 1.0</p>
                     <p>LAST UPDATE: 17-05-2025</p>
                 </div>
             </div>
@@ -158,7 +164,60 @@
          </div>
 
     </main>
-    
+
+    <div class="options-overlay" id="options-overlay">
+        <div class="options-window">
+            <div class="options-option" id="change-name">CHANGE NAME</div>
+            <div class="options-option" id="reset-rupees">RESET RUPEES</div>
+            <div class="options-option" id="reset-all">FULL RESET</div>
+            <div class="options-option" id="turbo-mode">TURBO MODE</div>
+            <div class="options-option" id="github">
+                <a href="https://github.com/AyalaDAM/RupeeClicker" target="_blank">GITHUB</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="options-overlay" id="achievements-overlay">
+        <div class="options-window" id="achievements-list">
+            <div class="achievement" id="achievement-first-click">
+                <div class="achievement-name">FIRST CLICK!</div>
+                <div class="achievement-desc">MAKE YOUR FISRT CLICK</div>
+            </div>
+            <div class="achievement" id="achievement-tingle">
+                <div class="achievement-name">TINGLES!!</div>
+                <div class="achievement-desc">BUY 10 TINGLES</div>
+            </div>
+            <div class="achievement" id="achievement-deity">
+                <div class="achievement-name">DEITY</div>
+                <div class="achievement-desc">GET YOUR FIRST POWER</div>
+            </div>
+            <div class="achievement" id="achievement-banker">
+                <div class="achievement-name">HAPPY BANKER</div>
+                <div class="achievement-desc">REACH 1 MILLION RUPEES</div>
+            </div>
+            <div class="achievement" id="achievement-tryhard">
+                <div class="achievement-name">TRYHARD</div>
+                <div class="achievement-desc">REACH 1 TRILLION RUPEES</div>
+            </div>
+            <div class="achievement" id="achievement-hero">
+                <div class="achievement-name">THE CHOSEN HERO</div>
+                <div class="achievement-desc">OBTAIN ALL THE POWERS</div>
+            </div>
+            <div class="achievement" id="achievement-dale">
+                <div class="achievement-name">DALE ZELDA DALE</div>
+                <div class="achievement-desc">OBTAIN LA BOTELLA DE ZORA GRANDE</div>
+            </div>
+            <div class="achievement" id="achievement-cheating">
+                <div class="achievement-name">CHEATING ?</div>
+                <div class="achievement-desc">MODIFY THE TURBO MODE</div>
+            </div>
+            <div class="achievement" id="achievement-thank">
+                <div class="achievement-name">THANK YOU</div>
+                <div class="achievement-desc">CHECK MY GITHUB</div>
+            </div>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>

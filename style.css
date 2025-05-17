@@ -1,6 +1,7 @@
 /*
-Tested in: Firefox and Chrome (Windows).
+Tested in: Firefox and Chrome.
 Screen resolutions (16:9): 1080p, 1440p.
+Platform: Windows PC.
 */
 
 :root {
@@ -27,7 +28,6 @@ Screen resolutions (16:9): 1080p, 1440p.
 }
 
 body {
-    overflow: hidden;
     background-image: url('assets/wooden-background.jpg');
     background-size: cover;
     background-position: center;
@@ -37,10 +37,11 @@ body {
 /* MAIN */
 
 main {
-    /*background-color: red;*/
+    /* background-color: red; */
     display: flex;
     height: 100vh;
     width: 100vw;
+    overflow: hidden;
 }
 
 .h-separator {
@@ -209,6 +210,74 @@ main {
 
 .options > div:active {
     transform: scale(1.1);
+}
+
+.options-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.options-window {
+    background-color: rgba(0, 0, 0, 0.85);
+    padding: 30px;
+    clip-path: polygon(20px 0, calc(100% - 20px) 0, 100% 20px, 100% calc(100% - 20px), calc(100% - 20px) 100%, 20px 100%, 0 calc(100% - 20px), 0 20px);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 300px;
+}
+
+.options-option {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    cursor: pointer;
+    font-size: clamp(16px, 1vw, 24px);
+    clip-path: polygon(20px 0, calc(100% - 20px) 0, 100% 20px, 100% calc(100% - 20px), calc(100% - 20px) 100%, 20px 100%, 0 calc(100% - 20px), 0 20px);
+}
+
+.options-option:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+#achievements-overlay {
+    display: none;
+}
+
+#achievements-list {
+    width: 40%;
+}
+
+.achievement {
+    background-color: rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    padding: 25px 40px;
+    font-size: clamp(16px, 1vw, 24px);
+    clip-path: polygon(20px 0, calc(100% - 20px) 0, 100% 20px, 100% calc(100% - 20px), calc(100% - 20px) 100%, 20px 100%, 0 calc(100% - 20px), 0 20px);
+}
+
+.achievement-name {
+    width: 30%;
+}
+
+.achievement-desc {
+    width: 60%;
+    margin-left: 35px;
+    font-size: clamp(13px, 0.3vw, 24px);
+}
+
+.achievement {
+    background-color: rgba(255, 255, 255, 0.089);
 }
 
 .game-bots {

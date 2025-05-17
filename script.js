@@ -1,19 +1,7 @@
 /*
-En mostrar todas las opciones:
-    - Cambio de nombre
-    - Reset de rupias
-    - Reset de todo
-    - Modo turbo (a elegir el multiplicador)
-
-Añadir que los bots estén en gris si no se pueden comprar en
-lugar de que salte la alerta.
-
-El objetivo es conseguir la botella de zora grande y cuando se
-consigue empieza a sonar dale zelda dale además de obtener un
-logro final.
-
-Bugs:
-    - En Chrome no se puede obtener la botella de zora grande
+Tested in: Firefox and Chrome.
+Screen resolutions (16:9): 1080p, 1440p.
+Platform: Windows 10 PC.
 */
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -21,12 +9,44 @@ document.addEventListener("DOMContentLoaded", function() {
 /*
     Variables globales
 */
+const username = document.getElementById("username");
+
 var clickCounter = 0;
 
 const rupee = document.getElementById("rupee");
 const counter = document.getElementById("counter");
 currentValue = parseInt(counter.textContent, 10) || 0;
 
+const changeNameButton = document.getElementById("change-name");
+const resetRupeesButton = document.getElementById("reset-rupees");
+const resetAllButton = document.getElementById("reset-all");
+const turboButton = document.getElementById("turbo-mode");
+const githubButton = document.getElementById("github");
+
+const achFirstClick = document.getElementById("achievement-first-click");
+const achTingle = document.getElementById("achievement-tingle");
+const achDeity = document.getElementById("achievement-deity");
+const achBanker = document.getElementById("achievement-banker");
+const achTryhard = document.getElementById("achievement-tryhard");
+const achHero = document.getElementById("achievement-hero");
+const achDale = document.getElementById("achievement-dale");
+const achCheating = document.getElementById("achievement-cheating");
+const achThank = document.getElementById("achievement-thank");
+
+var flagFirstClick = false;
+var flagTingle = false;
+var flagDeity = false;
+var flagBanker = false;
+var flagTryhard = false;
+var flagHero = false;
+var flagDale = false;
+var flagCheating = false;
+var flagThank = false;
+
+const fullscreenButton = document.getElementById("fullscreen");
+const clickOptions = document.querySelectorAll(".option");
+const optionSound = new Audio("assets/sounds/click_options.mp3");
+const upgradeSound = new Audio("assets/sounds/buy_upgrade.mp3");
 const botSound = new Audio("assets/sounds/buy_bot.mp3");
 const daleSound = new Audio("assets/sounds/DALE_ZELDA_DALE.mp3");
 
@@ -44,12 +64,12 @@ const quantityOcarina = document.getElementById("quantity-ocarina");
 const quantityTriforce = document.getElementById("quantity-triforce");
 const quantityGanondorfa = document.getElementById("quantity-ganondorfa");
 
-const tingle = 1;
-const sack = 10;
-const cape = 100;
-const ocarina = 500;
-const triforce = 1000;
-const ganondorfa = 100000;
+var tingle = 1;
+var sack = 10;
+var cape = 100;
+var ocarina = 500;
+var triforce = 1000;
+var ganondorfa = 100000;
 
 var tinglePrice = 100;
 var sackPrice = 1500;
@@ -58,17 +78,26 @@ var ocarinaPrice = 25000;
 var triforcePrice = 100000;
 var ganondorfaPrice = 999999;
 
-var numberTingle = 3;
+var numberTingle = 5;
 var numberSack = 0;
 var numberCape = 0;
 var numberOcarina = 0;
 var numberTriforce = 0;
 var numberGanondorfa = 0;
 
+
+const wisdomPower = document.getElementById("wisdom");
+const powerPower = document.getElementById("power");
+const couragePower = document.getElementById("courage");
+
 var wisdom = 1;
 var power = 1;
 var courage = 1;
-var turboMode = 100;
+var turboMode = 1;
+
+let powerBought = false;
+let wisdomBought = false;
+let courageBought = false;
 
 
 
@@ -77,17 +106,18 @@ var turboMode = 100;
 */
     alert("It's recommended to play in fullscreen mode. You can press F11 or the fullscreen option (next to \"Achievements\") to enter fullscreen mode. You can press scape to exit fullscreen mode.");
 
-    var name = prompt("Welcome, choose your name:");
-
-    while (name === null || name.trim() === "") {
-        name = prompt("Please, choose a valid name:");
-    }
-
-    const username = document.getElementById("username");
-
     function setUsername(name) {
+        while (name === null || name.trim() === "" || name.length > 12) {
+            if (name === null || name.trim() === "") {
+                name = prompt("Please, choose a valid name:");
+            } else if (name.length > 12) {
+                name = prompt("Names can't be longer than 12 characters:");
+            }
+        }
         username.textContent = name.toString().toUpperCase() + "'S CHEST";
     }
+
+    var name = prompt("Welcome, choose your name:");
 
     setUsername(name);
 
@@ -113,8 +143,6 @@ var turboMode = 100;
         }
     });
 
-    const fullscreenButton = document.getElementById("fullscreen");
-
     fullscreenButton.addEventListener("click", function() {
         playBackgroundMusic();
     });
@@ -129,9 +157,6 @@ var turboMode = 100;
     });
 
 
-    const clickOptions = document.querySelectorAll(".option");
-    const optionSound = new Audio("assets/sounds/click_options.mp3");
-
     clickOptions.forEach(option => {
         option.addEventListener("click", () => {
             optionSound.currentTime = 0;
@@ -142,8 +167,6 @@ var turboMode = 100;
 
 
     function playUpgradeSound() {
-        const upgradeSound = new Audio("assets/sounds/buy_upgrade.mp3");
-
         upgradeSound.currentTime = 0;
         upgradeSound.volume = 0.3;
         upgradeSound.play();
@@ -158,16 +181,21 @@ var turboMode = 100;
 
 
     function playDaleSound() {
-        if (daleSound.paused) {
-            backgroundMusic.pause();
-
-            daleSound.currentTime = 0;
-            daleSound.volume = 0.3;
-            daleSound.play();
+        if (!daleSound.paused || daleSound.currentTime > 0) {
+            return;
         }
 
+        if (backgroundMusic) {
+            backgroundMusic.pause();
+        }
+        daleSound.currentTime = 0;
+        daleSound.volume = 0.3;
+        daleSound.play();
+
         setTimeout(() => {
-            backgroundMusic.play();
+            if (backgroundMusic) {
+                backgroundMusic.play();
+            }
         }, 99000);
     }
 
@@ -195,21 +223,269 @@ var turboMode = 100;
 
 
 /*
+    Rupees image change
+*/
+    function changeRupeeImage(value) {
+        switch (value) {
+            case "green":
+                rupee.style.backgroundImage = "url('assets/rupee.png')";
+                break;
+            case "blue":
+                rupee.style.backgroundImage = "url('assets/rupee2.png')";
+                break;
+            case "red":
+                rupee.style.backgroundImage = "url('assets/rupee3.png')";
+                break;
+            case "purple":
+                rupee.style.backgroundImage = "url('assets/rupee4.png')";
+                break;
+            case "gold":
+                rupee.style.backgroundImage = "url('assets/rupee5.png')";
+                break;
+        }
+    }
+
+
+
+/*
+    Options menu
+*/
+    document.querySelector('.option-full').addEventListener('click', () => {
+        document.getElementById('options-overlay').style.display = 'flex';
+    });
+
+    document.getElementById('options-overlay').addEventListener('click', (e) => {
+        if (e.target.id === 'options-overlay') {
+            document.getElementById('options-overlay').style.display = 'none';
+        }
+    });
+
+
+
+/*
+    Options
+*/
+    changeNameButton.addEventListener("click", () => {
+        let newName = prompt("Enter your new name:");
+
+        while (newName === null || newName.trim() === "") {
+            newName = prompt("Please enter a valid name:");
+        }
+
+        setUsername(newName);
+        playUpgradeSound();
+        alert("Name successfully changed!");
+    });
+
+    resetRupeesButton.addEventListener("click", () => {
+        if (confirm("Are you sure you want to reset your rupees?")) {
+            currentValue = 0;
+            updateCounter();
+            changeRupeeImage("green");
+            alert("Rupees reset!");
+        }
+    });
+
+    resetAllButton.addEventListener("click", () => {
+        if (confirm("⚠️ Are you sure you want to reset EVERYTHING?")) {
+            clickCounter = 0;
+            currentValue = 0;
+
+            numberTingle = 0;
+            numberSack = 0;
+            numberCape = 0;
+            numberOcarina = 0;
+            numberTriforce = 0;
+            numberGanondorfa = 0;
+
+            tingle = 1;
+            sack = 10;
+            cape = 100;
+            ocarina = 500;
+            triforce = 1000;
+            ganondorfa = 100000;
+
+            power = 1;
+            wisdom = 1;
+            courage = 1;
+            turboMode = 1;
+
+            powerBought = false;
+            wisdomBought = false;
+            courageBought = false;
+
+            powerPower.style.filter = 'grayscale(100%)';
+            wisdomPower.style.filter = 'grayscale(100%)';
+            couragePower.style.filter = 'grayscale(100%)';
+
+            tinglePrice = 100;
+            sackPrice = 1500;
+            capePrice = 5000;
+            ocarinaPrice = 25000;
+            triforcePrice = 100000;
+            ganondorfaPrice = 999999;
+
+            updateVisualBots("tingle");
+            updateVisualBots("sack");
+            updateVisualBots("cape");
+            updateVisualBots("ocarina");
+            updateVisualBots("triforce");
+            updateVisualBots("ganondorfa");
+
+            updateBotsAvailability();
+
+            updateCounter();
+            changeRupeeImage("green");
+        }
+    });
+
+    turboButton.addEventListener("click", () => {
+        const value = prompt("Choose your turbo multiplier:");
+        const turboValue = parseInt(value, 10);
+
+        if (!isNaN(turboValue)) {
+            if (!flagCheating) {
+                updateAchievement("cheating");
+            }
+
+            turboMode = turboValue;
+            playUpgradeSound();
+            alert("Turbo mode activated x " + turboMode + "!");
+        } else {
+            alert("Invalid turbo value.");
+        }
+    });
+
+    githubButton.addEventListener("click", () => {
+        if (!flagThank) {
+            updateAchievement("thank");
+        }
+    });
+
+
+
+/*
+    Achievements
+*/
+    document.querySelector('.option-achievements').addEventListener('click', () => {
+        document.getElementById('achievements-overlay').style.display = 'flex';
+    });
+
+    document.getElementById('achievements-overlay').addEventListener('click', (e) => {
+        if (e.target.id === 'achievements-overlay') {
+            document.getElementById('achievements-overlay').style.display = 'none';
+        }
+    });
+
+    function updateAchievement(ach) {
+        switch (ach) {
+            case "first":
+                flagFirstClick = true;
+                achFirstClick.style.backgroundColor = "rgba(26, 136, 22, 0.6)";
+                playUpgradeSound();
+                break;
+            case "tingle":
+                flagTingle = true;
+                achTingle.style.backgroundColor = "rgba(26, 136, 22, 0.6)";
+                playUpgradeSound();
+                break;
+            case "deity":
+                flagDeity = true;
+                achDeity.style.backgroundColor = "rgba(26, 136, 22, 0.6)";
+                playUpgradeSound();
+                break;
+            case "banker":
+                flagBanker = true;
+                achBanker.style.backgroundColor = "rgba(26, 136, 22, 0.6)";
+                playUpgradeSound();
+                break;
+            case "tryhard":
+                flagTryhard = true;
+                achTryhard.style.backgroundColor = "rgba(26, 136, 22, 0.6)";
+                playUpgradeSound();
+                break;
+            case "hero":
+                flagHero = true;
+                achHero.style.backgroundColor = "rgba(26, 136, 22, 0.6)";
+                playUpgradeSound();
+                break;
+            case "dale":
+                flagDale = true;
+                achDale.style.backgroundColor = "rgba(26, 136, 22, 0.6)";
+                playUpgradeSound();
+                break;
+            case "cheating":
+                flagCheating = true;
+                achCheating.style.backgroundColor = "rgba(26, 136, 22, 0.6)";
+                playUpgradeSound();
+                break;
+            case "thank":
+                flagThank = true;
+                achThank.style.backgroundColor = "rgba(26, 136, 22, 0.6)";
+                playUpgradeSound();
+                break;
+        }
+    };
+
+
+
+/*
+    Bots availability
+*/
+    function updateBotsAvailability() {
+        botTingle.style.filter = currentValue >= tinglePrice ? "none" : "grayscale(100%)";
+        botSack.style.filter = currentValue >= sackPrice ? "none" : "grayscale(100%)";
+        botCape.style.filter = currentValue >= capePrice ? "none" : "grayscale(100%)";
+        botOcarina.style.filter = currentValue >= ocarinaPrice ? "none" : "grayscale(100%)";
+        botTriforce.style.filter = currentValue >= triforcePrice ? "none" : "grayscale(100%)";
+        botGanondorfa.style.filter = currentValue >= ganondorfaPrice ? "none" : "grayscale(100%)";
+    }
+
+
+
+/*
     Rupees increments
 */
     function formatNumber(num) {
-        if (num >= 1e12) return (num / 1e12).toFixed(4) + " TRI.";
-        if (num >= 1e9)  return (num / 1e9).toFixed(4) + " BIL.";
-        if (num >= 1e6)  return (num / 1e6).toFixed(4) + " MIL";
+        if (num >= 1e12) {
+            changeRupeeImage("gold");
+            return (num / 1e12).toFixed(4) + " TRI.";
+        }
+        if (num >= 1e9) {
+            changeRupeeImage("purple");
+            return (num / 1e9).toFixed(4) + " BIL.";
+        }
+        if (num >= 1e6) {
+            changeRupeeImage("red");
+            return (num / 1e6).toFixed(4) + " MIL.";
+        }
+        if (num >= 1e3) {
+            changeRupeeImage("blue");
+        }
         return num.toString();
     }
 
     function updateCounter() {
+        if (currentValue >= 1000000 && !flagBanker) {
+            updateAchievement("banker");
+        }
+
+        if (currentValue >= 1000000000000 && !flagTryhard) {
+            updateAchievement("tryhard");
+        }
+
         counter.textContent = formatNumber(currentValue);
+        updateBotsAvailability();
+        refreshAchievements()
     }
 
     function clickRupee() {
+        if (!flagFirstClick) {
+            updateAchievement("first");
+        }
+
         currentValue += 1 * power * turboMode;
+
         clickCounter++;
         updateCounter();
     }
@@ -257,65 +533,91 @@ var turboMode = 100;
 /*
     Upgrade shop
 */
-    const wisdomPower = document.getElementById("wisdom");
-    const powerPower = document.getElementById("power");
-    const couragePower = document.getElementById("courage");
+    let powerListenerAdded = false;
+    let wisdomListenerAdded = false;
+    let courageListenerAdded = false;
 
-    let powerBought = false;
-    let wisdomBought = false;
-    let courageBought = false;
+    function checkHeroAchievement() {
+        if (powerBought && wisdomBought && courageBought && !flagHero) {
+            updateAchievement("hero");
+        }
+    }
 
     function checkUpgrades() {
-        if (!powerBought && numberTingle >= 10) {
+        
+        if (!powerBought && numberTingle >= 10 && !powerListenerAdded) {
+            if (!flagTingle) {
+                updateAchievement("tingle");
+            }
+
             powerPower.style.filter = 'none';
 
             function buyPower() {
+                if (!flagDeity) {
+                    updateAchievement("deity");
+                }
+
                 powerBought = true;
                 playUpgradeSound();
                 power = 2;
                 alert("You have bought the Power upgrade! Now every click on the rupee gets 2 rupees!");
                 powerPower.removeEventListener("click", buyPower);
+                powerListenerAdded = false;
+
+                checkHeroAchievement();
             }
 
             powerPower.addEventListener("click", buyPower);
-
-            // Cambiamos powerBought para que no añada otro listener
-            powerBought = true;
+            powerListenerAdded = true;
         }
 
-        // Igual con las otras dos mejoras
-        if (!wisdomBought && currentValue >= 25000) {
+        if (!wisdomBought && currentValue >= 25000 && !wisdomListenerAdded) {
             wisdomPower.style.filter = 'none';
 
             function buyWisdom() {
+                if (!flagDeity) {
+                    updateAchievement("deity");
+                }
+
                 wisdomBought = true;
                 playUpgradeSound();
                 wisdom = 2;
                 alert("You have bought the Wisdom upgrade! Now all the items effects are doubled!");
                 wisdomPower.removeEventListener("click", buyWisdom);
+                wisdomListenerAdded = false;
+
+                checkHeroAchievement();
             }
 
             wisdomPower.addEventListener("click", buyWisdom);
-            wisdomBought = true;
+            wisdomListenerAdded = true;
         }
 
-        if (!courageBought && clickCounter >= 100) {
+        if (!courageBought && clickCounter >= 100 && !courageListenerAdded) {
             couragePower.style.filter = 'none';
 
             function buyCourage() {
+                if (!flagDeity) {
+                    updateAchievement("deity");
+                }
+
                 courageBought = true;
                 playUpgradeSound();
                 courage = 2;
                 alert("You have bought the Courage upgrade! Now all the items are cheaper!");
                 couragePower.removeEventListener("click", buyCourage);
+                courageListenerAdded = false;
+
+                checkHeroAchievement();
             }
 
             couragePower.addEventListener("click", buyCourage);
-            courageBought = true;
+            courageListenerAdded = true;
         }
     }
 
     setInterval(checkUpgrades, 500);
+
 
 
 
@@ -359,8 +661,6 @@ var turboMode = 100;
             currentValue -= tinglePrice;
             updateVisualBots("tingle");
             updateCounter();
-        } else {
-            alert("Not enough rupees to buy Tingle's Help!");
         }
     });
 
@@ -372,8 +672,6 @@ var turboMode = 100;
             currentValue -= sackPrice;
             updateVisualBots("sack");
             updateCounter();
-        } else {
-            alert("Not enough rupees to buy the Big Sack!");
         }
     });
 
@@ -385,8 +683,6 @@ var turboMode = 100;
             currentValue -= capePrice;
             updateVisualBots("cape");
             updateCounter();
-        } else {
-            alert("Not enough rupees to buy the Roc'sCape!");
         }
     });
 
@@ -398,8 +694,6 @@ var turboMode = 100;
             currentValue -= ocarinaPrice;
             updateVisualBots("ocarina");
             updateCounter();
-        } else {
-            alert("Not enough rupees to buy the Ocarina!");
         }
     });
 
@@ -411,21 +705,20 @@ var turboMode = 100;
             currentValue -= triforcePrice;
             updateVisualBots("triforce");
             updateCounter();
-        } else {
-            alert("Not enough rupees to buy the Triforce!");
         }
     });
 
     botGanondorfa.addEventListener("click", function() {
 
         if (currentValue >= ganondorfaPrice) {
+            if (!flagDale) {
+                updateAchievement("dale");
+            }
             playDaleSound()
             numberGanondorfa++;
             currentValue -= ganondorfaPrice;
             updateVisualBots("ganondorfa");
             updateCounter();
-        } else {
-            alert("Not enough rupees to buy Bachatita!");
         }
     });
 
