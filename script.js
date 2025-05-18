@@ -578,12 +578,12 @@ let courageBought = false;
         to buy them.
     */
     function updateBotsAvailability() {
-        botTingle.style.filter = currentValue >= tinglePrice ? "none" : "grayscale(100%)";
-        botSack.style.filter = currentValue >= sackPrice ? "none" : "grayscale(100%)";
-        botCape.style.filter = currentValue >= capePrice ? "none" : "grayscale(100%)";
-        botOcarina.style.filter = currentValue >= ocarinaPrice ? "none" : "grayscale(100%)";
-        botTriforce.style.filter = currentValue >= triforcePrice ? "none" : "grayscale(100%)";
-        botGanondorfa.style.filter = currentValue >= ganondorfaPrice ? "none" : "grayscale(100%)";
+        botTingle.style.filter = currentValue >= tinglePrice / courage ? "none" : "grayscale(100%)";
+        botSack.style.filter = currentValue >= sackPrice / courage ? "none" : "grayscale(100%)";
+        botCape.style.filter = currentValue >= capePrice / courage ? "none" : "grayscale(100%)";
+        botOcarina.style.filter = currentValue >= ocarinaPrice / courage ? "none" : "grayscale(100%)";
+        botTriforce.style.filter = currentValue >= triforcePrice / courage ? "none" : "grayscale(100%)";
+        botGanondorfa.style.filter = currentValue >= ganondorfaPrice / courage ? "none" : "grayscale(100%)";
     }
 
 
@@ -938,6 +938,7 @@ let courageBought = false;
         ocarinaPriceText.textContent = formatPriceWithDots("x " + (Math.floor(ocarinaPrice / courage)));
         triforcePriceText.textContent = formatPriceWithDots("x " + (Math.floor(triforcePrice / courage)));
         ganondorfaPriceText.textContent = formatPriceWithDots("x " + (Math.floor(ganondorfaPrice / courage)));
+        updateBotsAvailability();
     }
 
 
@@ -956,7 +957,7 @@ let courageBought = false;
         if (currentValue >= tinglePrice / courage) {
             playBotsSound()
             numberTingle++;
-            currentValue -= tinglePrice;
+            currentValue -= tinglePrice / courage;
             updateVisualBots("tingle");
             updateCounter();
             updateBotPricesVisual();
@@ -968,7 +969,7 @@ let courageBought = false;
         if (currentValue >= sackPrice / courage) {
             playBotsSound()
             numberSack++;
-            currentValue -= sackPrice;
+            currentValue -= sackPrice / courage;
             updateVisualBots("sack");
             updateCounter();
             updateBotPricesVisual();
@@ -980,7 +981,7 @@ let courageBought = false;
         if (currentValue >= capePrice / courage) {
             playBotsSound()
             numberCape++;
-            currentValue -= capePrice;
+            currentValue -= capePrice / courage;
             updateVisualBots("cape");
             updateCounter();
             updateBotPricesVisual();
@@ -992,7 +993,7 @@ let courageBought = false;
         if (currentValue >= ocarinaPrice / courage) {
             playBotsSound()
             numberOcarina++;
-            currentValue -= ocarinaPrice;
+            currentValue -= ocarinaPrice / courage;
             updateVisualBots("ocarina");
             updateCounter();
             updateBotPricesVisual();
@@ -1004,7 +1005,7 @@ let courageBought = false;
         if (currentValue >= triforcePrice / courage) {
             playBotsSound()
             numberTriforce++;
-            currentValue -= triforcePrice;
+            currentValue -= triforcePrice / courage;
             updateVisualBots("triforce");
             updateCounter();
             updateBotPricesVisual();
@@ -1023,7 +1024,7 @@ let courageBought = false;
 
             playDaleSound()
             numberGanondorfa++;
-            currentValue -= ganondorfaPrice;
+            currentValue -= ganondorfaPrice / courage;
             updateVisualBots("ganondorfa");
             updateCounter();
             updateBotPricesVisual();
